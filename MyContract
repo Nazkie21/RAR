@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.25;
+
+//Write a smart contract that implements the require(), assert() and revert() statements.
+
+contract MyContract {
+
+    // Mapping variable to store balances
+    mapping(address => uint) public balances;
+
+    // Deposit Function
+    function deposit(address _address, uint _value) public {
+        require(_value > 100, "Deposit value must be greater than 100");
+
+        balances[_address] += _value;
+
+        assert(balances[_address] >= _value);
+        if (balances[_address] < _value) {
+            revert("Deposit failed");
+        }
+    }
+
+    // Withdraw Function
+    function withdraw(address _address, uint _value) public {
+        require(balances[_address] >= _value, "Insufficient balance");
+
+        balances[_address] -= _value;
+
+        assert(balances[_address] >= 0);
+        if (balances[_address] < 0) {
+            revert("Withdrawal failed");
+        }
+    }
+}
