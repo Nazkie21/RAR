@@ -16,39 +16,27 @@ Once you are on the Remix website, create a new file by clicking on the "+" icon
 
 ```javascript
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.25;
+pragma solidity ^0.8.0;
 
-//Write a smart contract that implements the require(), assert() and revert() statements.
+contract AssertionExample {
+    uint256 public value;
 
-contract MyContract {
-
-    // Mapping variable to store balances
-    mapping(address => uint) public balances;
-
-    // Deposit Function
-    function deposit(address _address, uint _value) public {
-        require(_value > 100, "Deposit value must be greater than 100");
-
-        balances[_address] += _value;
-
-        assert(balances[_address] >= _value);
-        if (balances[_address] < _value) {
-            revert("Deposit failed");
+    function updateValue(uint256 _newValue) external {
+        // Require statement
+        require(_newValue != 0, "New value must not be zero");
+        
+        // Assert statement
+        assert(_newValue != 100);
+        
+        // Revert statement
+        if (_newValue == 50) {
+            revert("New value cannot be 50");
         }
-    }
-
-    // Withdraw Function
-    function withdraw(address _address, uint _value) public {
-        require(balances[_address] >= _value, "Insufficient balance");
-
-        balances[_address] -= _value;
-
-        assert(balances[_address] >= 0);
-        if (balances[_address] < 0) {
-            revert("Withdrawal failed");
-        }
+        
+        value = _newValue;
     }
 }
+
 
 ```
 
